@@ -1,0 +1,3 @@
+Quick Commands
+- [command] : [Definition]
+- python3 manage.py runserver : Run server
