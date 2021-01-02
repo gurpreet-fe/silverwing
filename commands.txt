@@ -1,3 +1,5 @@
 Quick Commands
-- [command] : [Definition]
-- python3 manage.py runserver : Run server
+- [command] : [Definition] // path is silverwing directory
+- python manage.py runserver : Run server
+- python manage.py makemigrations : Make migrations
+- python manage.py migrate : Migrate
