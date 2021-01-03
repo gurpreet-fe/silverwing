@@ -3,3 +3,4 @@ Quick Commands
 - python manage.py runserver : Run server
 - python manage.py makemigrations : Make migrations
 - python manage.py migrate : Migrate
+- npm run dev : Run webpack
