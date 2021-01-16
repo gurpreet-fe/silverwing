@@ -4,3 +4,7 @@ Quick Commands
 - python manage.py makemigrations : Make migrations
 - python manage.py migrate : Migrate
 - npm run dev : Run webpack
+- npm install : Install node_modules included in package.js
+
+* note
+    - use python command for windows and python3 command for mac
