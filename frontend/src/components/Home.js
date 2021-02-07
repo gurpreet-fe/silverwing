@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import JoinRoom from "./JoinRoom";
 import CreateRoom from "./CreateRoom";
+import Room from "./Room";
 import {
   BrowserRouter as Router,
   Switch,
@@ -22,6 +23,7 @@ export default class Home extends Component {
           </Route>
           <Route path="/join" component={JoinRoom} />
           <Route path="/create" component={CreateRoom} />
+          <Route path="/room/:roomCode" component={Room} />
         </Switch>
       </Router>
     );
