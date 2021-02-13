@@ -22,37 +22,11 @@ export default class CreateRoom extends Component {
       votesToSkip: this.defaultVotes,
     };
 
-    this.roomButtonPressedHandler = this.roomButtonPressedHandler.bind(this);
-    this.votesChangeHandler = this.votesChangeHandler.bind(this);
-    this.guestCanPauseChangeHandler = this.guestCanPauseChangeHandler.bind(
+    this._roomButtonPressedHandler = this._roomButtonPressedHandler.bind(this);
+    this._votesChangeHandler = this._votesChangeHandler.bind(this);
+    this._guestCanPauseChangeHandler = this._guestCanPauseChangeHandler.bind(
       this
     );
-  }
-
-  votesChangeHandler(e) {
-    this.setState({
-      votesToSkip: e.target.value,
-    });
-  }
-
-  guestCanPauseChangeHandler(e) {
-    this.setState({
-      guestCanPause: e.target.value === "true" ? true : false,
-    });
-  }
-
-  roomButtonPressedHandler() {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        votes_to_skip: this.state.votesToSkip,
-        guest_can_pause: this.state.guestCanPause,
-      }),
-    };
-    fetch("/api/create-room", requestOptions)
-      .then((response) => response.json())
-      .then((data) => this.props.history.push("/room/" + data.code));
   }
 
   render() {
@@ -71,7 +45,7 @@ export default class CreateRoom extends Component {
             <RadioGroup
               row
               defaultValue="true"
-              onChange={this.guestCanPauseChangeHandler}
+              onChange={this._guestCanPauseChangeHandler}
             >
               <FormControlLabel
                 value="true"
@@ -93,7 +67,7 @@ export default class CreateRoom extends Component {
             <TextField
               required={true}
               type="number"
-              onChange={this.votesChangeHandler}
+              onChange={this._votesChangeHandler}
               defaultValue={this.defaultVotes}
               inputProps={{
                 min: 1,
@@ -109,7 +83,7 @@ export default class CreateRoom extends Component {
           <Button
             color="primary"
             variant="contained"
-            onClick={this.roomButtonPressedHandler}
+            onClick={this._roomButtonPressedHandler}
           >
             Create A Room
           </Button>
@@ -121,5 +95,31 @@ export default class CreateRoom extends Component {
         </Grid>
       </Grid>
     );
+  }
+
+  _votesChangeHandler(e) {
+    this.setState({
+      votesToSkip: e.target.value,
+    });
+  }
+
+  _guestCanPauseChangeHandler(e) {
+    this.setState({
+      guestCanPause: e.target.value === "true" ? true : false,
+    });
+  }
+
+  _roomButtonPressedHandler() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        votes_to_skip: this.state.votesToSkip,
+        guest_can_pause: this.state.guestCanPause,
+      }),
+    };
+    fetch("/api/create-room", requestOptions)
+      .then((response) => response.json())
+      .then((data) => this.props.history.push("/room/" + data.code));
   }
 }
