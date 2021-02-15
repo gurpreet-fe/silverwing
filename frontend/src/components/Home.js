@@ -2,12 +2,31 @@ import React, { Component } from "react";
 import JoinRoom from "./JoinRoom";
 import CreateRoom from "./CreateRoom";
 import Room from "./Room";
-import { Button, Grid, Typography, ButtonGroup, Link } from "@material-ui/core";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Button, Grid, Typography, ButtonGroup } from "@material-ui/core";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      roomCode: null,
+    };
+  }
+
+  async componentDidMount() {
+    fetch("/api/user-in-room")
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          roomCode: data.code,
+        });
+      });
   }
 
   renderHomePage() {
@@ -37,9 +56,18 @@ export default class Home extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path='/'>
-            {this.renderHomePage()}
-          </Route>
+          <Route
+            exact
+            path='/'
+            render={() => {
+              return this.state.roomCode ? (
+                <Redirect to={`/room/${this.state.roomCode}`} />
+              ) : (
+                this.renderHomePage()
+              );
+            }}
+          />
+
           <Route path='/join' component={JoinRoom} />
           <Route path='/create' component={CreateRoom} />
           <Route path='/room/:roomCode' component={Room} />
