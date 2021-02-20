@@ -17,6 +17,7 @@ export default class Home extends Component {
     this.state = {
       roomCode: null,
     };
+    this.clearRoomCode = this.clearRoomCode.bind(this);
   }
 
   async componentDidMount() {
@@ -27,6 +28,12 @@ export default class Home extends Component {
           roomCode: data.code,
         });
       });
+  }
+
+  clearRoomCode() {
+    this.setState({
+      roomCode: null,
+    });
   }
 
   renderHomePage() {
@@ -70,7 +77,12 @@ export default class Home extends Component {
 
           <Route path='/join' component={JoinRoom} />
           <Route path='/create' component={CreateRoom} />
-          <Route path='/room/:roomCode' component={Room} />
+          <Route
+            path='/room/:roomCode'
+            render={(props) => {
+              return <Room {...props} leaveRoomCallback={this.clearRoomCode} />;
+            }}
+          />
         </Switch>
       </Router>
     );
