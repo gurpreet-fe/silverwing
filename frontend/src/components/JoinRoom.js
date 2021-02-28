@@ -11,7 +11,7 @@ export default class JoinRoom extends Component {
     };
 
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
-    this.handleRoomButtonClick = this.handleRoomButtonClick.bind(this);
+    this.handleJoinRoomButtonClick = this.handleJoinRoomButtonClick.bind(this);
   }
 
   handleTextFieldChange(e) {
@@ -20,7 +20,7 @@ export default class JoinRoom extends Component {
     });
   }
 
-  handleRoomButtonClick() {
+  handleJoinRoomButtonClick() {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -64,7 +64,7 @@ export default class JoinRoom extends Component {
           <Button
             variant='contained'
             color='primary'
-            onClick={this.handleRoomButtonClick}
+            onClick={this.handleJoinRoomButtonClick}
           >
             Enter Room
           </Button>

@@ -6,8 +6,8 @@ export default class Room extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      votesToSkip: 2,
       guestCanPause: false,
+      votesToSkip: 2,
       isHost: false,
       showSettings: false,
     };
@@ -55,31 +55,6 @@ export default class Room extends Component {
     });
   }
 
-  renderSettings() {
-    return (
-      <Grid container spacing={1}>
-        <Grid item xs={12} align='center'>
-          <CreateRoom
-            update={true}
-            votesToSkip={this.state.votesToSkip}
-            guestCanPause={this.state.guestCanPause}
-            roomCode={this.roomCode}
-            updateCallback={() => {}}
-          />
-        </Grid>
-        <Grid item xs={12} align='center'>
-          <Button
-            variant='contained'
-            color='secondary'
-            onClick={() => this.updateShowSettings(false)}
-          >
-            Close
-          </Button>
-        </Grid>
-      </Grid>
-    );
-  }
-
   renderSettingsButton() {
     return (
       <Grid item xs={12} align='center'>
@@ -94,6 +69,31 @@ export default class Room extends Component {
     );
   }
 
+  renderSettings() {
+    return (
+      <Grid container spacing={1}>
+        <Grid item xs={12} align='center'>
+          <CreateRoom
+            update={true}
+            votesToSkip={this.state.votesToSkip}
+            guestCanPause={this.state.guestCanPause}
+            roomCode={this.roomCode}
+            updateCallback={this.getRoomDetails}
+          />
+        </Grid>
+        <Grid item xs={12} align='center'>
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={() => this.updateShowSettings(false)}
+          >
+            Close
+          </Button>
+        </Grid>
+      </Grid>
+    );
+  }
+  
   render() {
     if (this.state.showSettings) {
       return this.renderSettings();
@@ -101,17 +101,17 @@ export default class Room extends Component {
     return (
       <Grid container spacing={1}>
         <Grid item xs={12} align='center'>
-          <Typography variant='h6' component='h6'>
+          <Typography variant='h4' component='h4'>
             Code: {this.roomCode}
           </Typography>
         </Grid>
         <Grid item xs={12} align='center'>
-          <Typography variant='h5' component='h5'>
+          <Typography variant='h6' component='h6'>
             Votes: {this.state.votesToSkip}
           </Typography>
         </Grid>
         <Grid item xs={12} align='center'>
-          <Typography variant='h4' component='h4'>
+          <Typography variant='h6' component='h6'>
             Guest Can Pause: {this.state.guestCanPause.toString()}
           </Typography>
         </Grid>
