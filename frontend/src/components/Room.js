@@ -6,8 +6,8 @@ export default class Room extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      votesToSkip: 2,
       guestCanPause: false,
+      votesToSkip: 2,
       isHost: false,
       showSettings: false,
     };
@@ -55,6 +55,20 @@ export default class Room extends Component {
     });
   }
 
+  renderSettingsButton() {
+    return (
+      <Grid item xs={12} align='center'>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => this.updateShowSettings(true)}
+        >
+          Settings
+        </Button>
+      </Grid>
+    );
+  }
+
   renderSettings() {
     return (
       <Grid container spacing={1}>
@@ -64,7 +78,7 @@ export default class Room extends Component {
             votesToSkip={this.state.votesToSkip}
             guestCanPause={this.state.guestCanPause}
             roomCode={this.roomCode}
-            updateCallback={() => {}}
+            updateCallback={this.getRoomDetails()}
           />
         </Grid>
         <Grid item xs={12} align='center'>
@@ -76,20 +90,6 @@ export default class Room extends Component {
             Close
           </Button>
         </Grid>
-      </Grid>
-    );
-  }
-
-  renderSettingsButton() {
-    return (
-      <Grid item xs={12} align='center'>
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => this.updateShowSettings(true)}
-        >
-          Settings
-        </Button>
       </Grid>
     );
   }
