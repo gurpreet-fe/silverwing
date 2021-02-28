@@ -126,6 +126,7 @@ class UpdateRoom(APIView):
             if room.host != user_id:
                 return Response({'Message': 'You are not the host of this room'}, status=status.HTTP_403_FORBIDDEN)
 
+
             room.guest_can_pause = guest_can_pause
             room.votes_to_skip = votes_to_skip
             room.save(update_fields=['guest_can_pause', 'votes_to_skip'])
