@@ -16,8 +16,8 @@ import { Alert } from '@material-ui/lab';
 
 export default class CreateRoom extends Component {
   static defaultProps = {
-    votesToSkip: 2,
     guestCanPause: true,
+    votesToSkip: 2,
     update: false,
     roomCode: null,
     updateCallback: () => {},
@@ -32,8 +32,8 @@ export default class CreateRoom extends Component {
       errorMessage: '',
     };
 
-    this.handleVotesChange = this.handleVotesChange.bind(this);
     this.handleGuestCanPauseChange = this.handleGuestCanPauseChange.bind(this);
+    this.handleVotesChange = this.handleVotesChange.bind(this);
     this.handleCreateRoomButtonClick = this.handleCreateRoomButtonClick.bind(
       this
     );
@@ -59,8 +59,8 @@ export default class CreateRoom extends Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        votes_to_skip: this.state.votesToSkip,
         guest_can_pause: this.state.guestCanPause,
+        votes_to_skip: this.state.votesToSkip,
       }),
     };
     fetch('/api/create-room', requestOptions)
@@ -73,8 +73,8 @@ export default class CreateRoom extends Component {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        votes_to_skip: this.state.votesToSkip,
         guest_can_pause: this.state.guestCanPause,
+        votes_to_skip: this.state.votesToSkip,
         code: this.props.roomCode,
       }),
     };
