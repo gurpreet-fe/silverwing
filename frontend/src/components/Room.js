@@ -31,8 +31,8 @@ export default class Room extends Component {
       })
       .then((data) => {
         this.setState({
-          votesToSkip: data.votes_to_skip,
           guestCanPause: data.guest_can_pause,
+          votesToSkip: data.votes_to_skip,
           isHost: data.is_host,
         });
       });
@@ -75,8 +75,8 @@ export default class Room extends Component {
         <Grid item xs={12} align='center'>
           <CreateRoom
             update={true}
-            votesToSkip={this.state.votesToSkip}
             guestCanPause={this.state.guestCanPause}
+            votesToSkip={this.state.votesToSkip}
             roomCode={this.roomCode}
             updateCallback={this.getRoomDetails}
           />
@@ -93,7 +93,7 @@ export default class Room extends Component {
       </Grid>
     );
   }
-  
+
   render() {
     if (this.state.showSettings) {
       return this.renderSettings();
