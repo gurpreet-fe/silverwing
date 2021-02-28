@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -11,8 +11,8 @@ import {
   RadioGroup,
   FormControlLabel,
   Collapse,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 export default class CreateRoom extends Component {
   static defaultProps = {
@@ -28,8 +28,8 @@ export default class CreateRoom extends Component {
     this.state = {
       guestCanPause: this.props.guestCanPause,
       votesToSkip: this.props.votesToSkip,
-      successMessage: '',
-      errorMessage: '',
+      successMessage: "",
+      errorMessage: "",
     };
 
     this.handleVotesChange = this.handleVotesChange.bind(this);
@@ -40,13 +40,13 @@ export default class CreateRoom extends Component {
     this.handleUpdateRoomButtonClick = this.handleUpdateRoomButtonClick.bind(
       this
     );
-    this.renderCreateButton = this.renderCreateButton.bind(this);
-    this.renderUpdateButton = this.renderUpdateButton.bind(this);
+    /* this.renderCreateButton = this.renderCreateButton.bind(this);
+    this.renderUpdateButton = this.renderUpdateButton.bind(this); */
   }
 
   handleGuestCanPauseChange(e) {
     this.setState({
-      guestCanPause: e.target.value === 'true' ? true : false,
+      guestCanPause: e.target.value === "true" ? true : false,
     });
   }
 
@@ -58,36 +58,36 @@ export default class CreateRoom extends Component {
 
   handleCreateRoomButtonClick() {
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         votes_to_skip: this.state.votesToSkip,
         guest_can_pause: this.state.guestCanPause,
       }),
     };
-    fetch('/api/create-room', requestOptions)
+    fetch("/api/create-room", requestOptions)
       .then((response) => response.json())
-      .then((data) => this.props.history.push('/room/' + data.code));
+      .then((data) => this.props.history.push("/room/" + data.code));
   }
 
   handleUpdateRoomButtonClick() {
     const requestOptions = {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         votes_to_skip: this.state.votesToSkip,
         guest_can_pause: this.state.guestCanPause,
         code: this.props.roomCode,
       }),
     };
-    fetch('/api/update-room', requestOptions).then((response) => {
+    fetch("/api/update-room", requestOptions).then((response) => {
       if (response.ok) {
         this.setState({
-          successMessage: 'Room updated successfully!',
+          successMessage: "Room updated successfully!",
         });
       } else {
         this.setState({
-          errorMessage: 'Error updating room...',
+          errorMessage: "Error updating room...",
         });
       }
 
@@ -131,21 +131,21 @@ export default class CreateRoom extends Component {
   }
 
   render() {
-    const title = this.props.update ? 'Update Room' : 'Create Room';
+    const title = this.props.update ? "Update Room" : "Create Room";
 
     return (
       <Grid container spacing={1}>
         <Grid item xs={12} align='center'>
           <Collapse
             in={
-              this.state.errorMessage != '' || this.state.successMessage != ''
+              this.state.errorMessage != "" || this.state.successMessage != ""
             }
           >
-            {this.state.successMessage != '' ? (
+            {this.state.successMessage != "" ? (
               <Alert
                 severity='success'
                 onClose={() => {
-                  this.setState({ successMessage: '' });
+                  this.setState({ successMessage: "" });
                 }}
               >
                 {this.state.successMessage}
@@ -153,7 +153,9 @@ export default class CreateRoom extends Component {
             ) : (
               <Alert
                 severity='error'
-                onClose={this.state.setState({ errorMessage: '' })}
+                onClose={() => {
+                  this.setState({ errorMessage: "" });
+                }}
               >
                 {this.state.errorMessage}
               </Alert>
@@ -196,10 +198,10 @@ export default class CreateRoom extends Component {
               required={true}
               type='number'
               onChange={this.handleVotesChange}
-              defaultValue={this.props.votesToSkip}
+              defaultValue={this.state.votesToSkip}
               inputProps={{
                 min: 1,
-                style: { textAlign: 'center' },
+                style: { textAlign: "center" },
               }}
             />
             <FormHelperText>
