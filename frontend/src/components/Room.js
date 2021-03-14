@@ -10,6 +10,7 @@ export default class Room extends Component {
       votesToSkip: 2,
       isHost: false,
       showSettings: false,
+      spotifyAuthenitcated: false,
     };
     this.roomCode = this.props.match.params.roomCode;
     this.getRoomDetails = this.getRoomDetails.bind(this);
@@ -18,6 +19,7 @@ export default class Room extends Component {
     this.updateShowSettings = this.updateShowSettings.bind(this);
     this.renderSettingsButton = this.renderSettingsButton.bind(this);
     this.renderSettings = this.renderSettings.bind(this);
+    this.authenticateSpotify = this.authenticateSpotify.bind(this);
   }
 
   getRoomDetails() {
@@ -35,6 +37,9 @@ export default class Room extends Component {
           votesToSkip: data.votes_to_skip,
           isHost: data.is_host,
         });
+        if (this.state.isHost) {
+          this.authenticateSpotify();
+        }
       });
   }
 
@@ -43,7 +48,7 @@ export default class Room extends Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     };
-    fetch('api/leave-room', requestOptions).then((response) => {
+    fetch('/api/leave-room', requestOptions).then((response) => {
       this.props.leaveRoomCallback();
       this.props.history.push('/');
     });
@@ -53,6 +58,21 @@ export default class Room extends Component {
     this.setState({
       showSettings: value,
     });
+  }
+
+  authenticateSpotify() {
+    fetch('/spotify/is-authenticated')
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ spotifyAuthenitcated: data.status });
+        if (!data.status) {
+          fetch('/spotify/get-auth-url')
+            .then((response) => response.json())
+            .then((data) => {
+              window.location.replace(data.url);
+            });
+        }
+      });
   }
 
   renderSettingsButton() {

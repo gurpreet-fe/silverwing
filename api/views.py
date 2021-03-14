@@ -97,7 +97,7 @@ class LeaveRoom(APIView):
             self.request.session.pop('room_code')
             host_id = self.request.session.session_key
             room_results = Room.objects.filter(host=host_id)
-            if not room_result.exists():
+            if not room_results.exists():
                 room = room_results[0]
                 room.delete()
 
