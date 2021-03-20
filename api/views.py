@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 
 # Create your views here.
+
+
 class RoomView(generics.ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
@@ -68,9 +70,9 @@ class JoinRoom(APIView):
 
         code = request.data.get(self.lookup_url_kwarg)
         if code != None:
-            room_result = Room.objects.filter(code=code)
-            if len(room_result) > 0:
-                room = room_result[0]
+            room_results = Room.objects.filter(code=code)
+            if len(room_results) > 0:
+                room = room_results[0]
                 self.request.session['room_code'] = code
                 return Response({'Message': 'Room joined!'}, status=status.HTTP_200_OK)
 
@@ -97,7 +99,7 @@ class LeaveRoom(APIView):
             self.request.session.pop('room_code')
             host_id = self.request.session.session_key
             room_results = Room.objects.filter(host=host_id)
-            if not room_results.exists():
+            if len(room_results) > 0:
                 room = room_results[0]
                 room.delete()
 
@@ -125,7 +127,6 @@ class UpdateRoom(APIView):
             user_id = self.request.session.session_key
             if room.host != user_id:
                 return Response({'Message': 'You are not the host of this room'}, status=status.HTTP_403_FORBIDDEN)
-
 
             room.guest_can_pause = guest_can_pause
             room.votes_to_skip = votes_to_skip

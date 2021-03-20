@@ -10,7 +10,7 @@ export default class Room extends Component {
       votesToSkip: 2,
       isHost: false,
       showSettings: false,
-      spotifyAuthenitcated: false,
+      spotifyAuthenticated: false,
     };
     this.roomCode = this.props.match.params.roomCode;
     this.getRoomDetails = this.getRoomDetails.bind(this);
@@ -64,7 +64,7 @@ export default class Room extends Component {
     fetch('/spotify/is-authenticated')
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ spotifyAuthenitcated: data.status });
+        this.setState({ spotifyAuthenticated: data.status });
         if (!data.status) {
           fetch('/spotify/get-auth-url')
             .then((response) => response.json())
