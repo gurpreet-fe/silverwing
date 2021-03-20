@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
-import Home from "./Home";
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import Home from './Home';
 
 export default class App extends Component {
   constructor(props) {
@@ -9,12 +9,12 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="center">
+      <div className='center'>
         <Home />
       </div>
     );
   }
 }
 
-const appDiv = document.getElementById("app");
-render(<App name="Gurpreet" />, appDiv);
+const appDiv = document.getElementById('app');
+render(<App />, appDiv);

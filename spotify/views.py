@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from .util import update_or_create_user_tokens, is_spotify_authenticated
 from dotenv import load_dotenv
+
 load_dotenv()
 
 
@@ -20,7 +21,7 @@ class AuthURL(APIView):
             'client_id': str(os.getenv('CLIENT_ID'))
         }).prepare().url
 
-        return Response({'URL': url}, status=status.HTTP_200_OK)
+        return Response({'url': url}, status=status.HTTP_200_OK)
 
 
 def spotify_callback(request, format=None):
