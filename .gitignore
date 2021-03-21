@@ -332,3 +332,11 @@ thumb
 sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/python,django,node,react
+
+frontend/static/frontend/main.js
+frontend/static/frontend/main.js.LICENSE.txt
+.vscode/settings.json
+
+spotify/credentials.py
+
+.vscode/launch.json

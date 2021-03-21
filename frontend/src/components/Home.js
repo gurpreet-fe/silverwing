@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import JoinRoom from "./JoinRoom";
-import CreateRoom from "./CreateRoom";
-import Room from "./Room";
-import { Button, Grid, Typography, ButtonGroup } from "@material-ui/core";
+import React, { Component } from 'react';
+import JoinRoom from './JoinRoom';
+import CreateRoom from './CreateRoom';
+import Room from './Room';
+import { Button, Grid, Typography, ButtonGroup } from '@material-ui/core';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   Redirect,
-} from "react-router-dom";
+} from 'react-router-dom';
 
 export default class Home extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ export default class Home extends Component {
   }
 
   async componentDidMount() {
-    fetch("/api/user-in-room")
+    fetch('/api/user-in-room')
       .then((response) => response.json())
       .then((data) => {
         this.setState({
@@ -40,7 +40,7 @@ export default class Home extends Component {
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} align='center'>
-          <Typography variant='h2' compact='h2'>
+          <Typography variant='h3' compact='h3'>
             Silver-Wing
           </Typography>
         </Grid>
