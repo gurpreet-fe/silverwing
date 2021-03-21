@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Grid, Button, Typography } from '@material-ui/core';
-import CreateRoom from './CreateRoom';
+import React, { Component } from "react";
+import { Grid, Button, Typography } from "@material-ui/core";
+import CreateRoom from "./CreateRoom";
 
 export default class Room extends Component {
   constructor(props) {
@@ -11,23 +11,25 @@ export default class Room extends Component {
       isHost: false,
       showSettings: false,
       spotifyAuthenticated: false,
+      song: {},
     };
     this.roomCode = this.props.match.params.roomCode;
     this.getRoomDetails = this.getRoomDetails.bind(this);
-    this.getRoomDetails();
     this.leaveButtonClick = this.leaveButtonClick.bind(this);
     this.updateShowSettings = this.updateShowSettings.bind(this);
     this.renderSettingsButton = this.renderSettingsButton.bind(this);
     this.renderSettings = this.renderSettings.bind(this);
     this.authenticateSpotify = this.authenticateSpotify.bind(this);
+    this.getRoomDetails();
+    this.getCurrentSong();
   }
 
   getRoomDetails() {
-    return fetch('/api/get-room' + '?code=' + this.roomCode)
+    return fetch("/api/get-room" + "?code=" + this.roomCode)
       .then((response) => {
         if (!response.ok) {
           this.props.leaveRoomCallback();
-          this.props.history.push('/');
+          this.props.history.push("/");
         }
         return response.json();
       })
@@ -43,14 +45,29 @@ export default class Room extends Component {
       });
   }
 
+  getCurrentSong() {
+    fetch("/spotify/current-song")
+      .then((response) => {
+        if (!response.ok) {
+          return {};
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        this.setState({ song: data });
+        console.log(data);
+      });
+  }
+
   leaveButtonClick() {
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
     };
-    fetch('/api/leave-room', requestOptions).then((response) => {
+    fetch("/api/leave-room", requestOptions).then((response) => {
       this.props.leaveRoomCallback();
-      this.props.history.push('/');
+      this.props.history.push("/");
     });
   }
 
@@ -61,13 +78,13 @@ export default class Room extends Component {
   }
 
   authenticateSpotify() {
-    fetch('/spotify/is-authenticated')
+    fetch("/spotify/is-authenticated")
       .then((response) => response.json())
       .then((data) => {
         this.setState({ spotifyAuthenticated: data.status });
 
         if (!data.status) {
-          fetch('/spotify/get-auth-url')
+          fetch("/spotify/get-auth-url")
             .then((response) => response.json())
             .then((data) => {
               window.location.replace(data.url);
@@ -126,21 +143,7 @@ export default class Room extends Component {
             Code: {this.roomCode}
           </Typography>
         </Grid>
-        <Grid item xs={12} align='center'>
-          <Typography variant='h6' component='h6'>
-            Votes: {this.state.votesToSkip}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} align='center'>
-          <Typography variant='h6' component='h6'>
-            Guest Can Pause: {this.state.guestCanPause.toString()}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} align='center'>
-          <Typography variant='h6' component='h6'>
-            Host: {this.state.isHost.toString()}
-          </Typography>
-        </Grid>
+        {this.state.song}
         {this.state.isHost ? this.renderSettingsButton() : null}
         <Grid item xs={12} align='center'>
           <Button
