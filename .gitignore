@@ -338,3 +338,5 @@ frontend/static/frontend/main.js.LICENSE.txt
 .vscode/settings.json
 
 spotify/credentials.py
+
+.vscode/launch.json

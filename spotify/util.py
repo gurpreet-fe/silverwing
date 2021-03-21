@@ -4,7 +4,10 @@ from django.utils import timezone
 from datetime import timedelta
 from requests import post
 from dotenv import load_dotenv
+
 load_dotenv()
+
+BASE_URL = "https://api.spotify.com/v1/me/"
 
 
 def get_user_tokens(session_key):
@@ -38,6 +41,8 @@ def is_spotify_authenticated(session_key):
         expiry = tokens.expires_in
         if expiry <= timezone.now():
             refresh_spotify_token(session_key)
+
+        return True
 
     return False
 
