@@ -100,4 +100,4 @@ class CurrentSong(APIView):
             'id': song_id
         }
 
-        return Response(response, status=status.HTTP_200_OK)
+        return Response(song, status=status.HTTP_200_OK)
