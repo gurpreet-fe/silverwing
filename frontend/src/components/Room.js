@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Grid, Button, Typography } from "@material-ui/core";
-import CreateRoom from "./CreateRoom";
-import MusicPlayer from "./MusicPlayer";
+import React, { Component } from 'react';
+import { Grid, Button, Typography } from '@material-ui/core';
+import CreateRoom from './CreateRoom';
+import MusicPlayer from './MusicPlayer';
 
 export default class Room extends Component {
   constructor(props) {
@@ -35,11 +35,11 @@ export default class Room extends Component {
   }
 
   getRoomDetails() {
-    return fetch("/api/get-room" + "?code=" + this.roomCode)
+    return fetch('/api/get-room' + '?code=' + this.roomCode)
       .then((response) => {
         if (!response.ok) {
           this.props.leaveRoomCallback();
-          this.props.history.push("/");
+          this.props.history.push('/');
         }
         return response.json();
       })
@@ -56,7 +56,7 @@ export default class Room extends Component {
   }
 
   getCurrentSong() {
-    fetch("/spotify/current-song")
+    fetch('/spotify/current-song')
       .then((response) => {
         if (!response.ok) {
           return {};
@@ -72,12 +72,12 @@ export default class Room extends Component {
 
   leaveButtonClick() {
     const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
     };
-    fetch("/api/leave-room", requestOptions).then((response) => {
+    fetch('/api/leave-room', requestOptions).then((response) => {
       this.props.leaveRoomCallback();
-      this.props.history.push("/");
+      this.props.history.push('/');
     });
   }
 
@@ -88,13 +88,13 @@ export default class Room extends Component {
   }
 
   authenticateSpotify() {
-    fetch("/spotify/is-authenticated")
+    fetch('/spotify/is-authenticated')
       .then((response) => response.json())
       .then((data) => {
         this.setState({ spotifyAuthenticated: data.status });
 
         if (!data.status) {
-          fetch("/spotify/get-auth-url")
+          fetch('/spotify/get-auth-url')
             .then((response) => response.json())
             .then((data) => {
               window.location.replace(data.url);

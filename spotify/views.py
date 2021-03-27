@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from requests import Request, post
 from rest_framework import status
 from rest_framework.response import Response
-from .util import* 
+from .util import *
 from api.models import Room
 from dotenv import load_dotenv
 
@@ -56,7 +56,7 @@ class IsAuthenticated(APIView):
     def get(self, request, format=None):
         is_authenticated = is_spotify_authenticated(
             self.request.session.session_key)
-        return Response({'Status': is_authenticated}, status=status.HTTP_200_OK)
+        return Response({'status': is_authenticated}, status=status.HTTP_200_OK)
 
 
 class CurrentSong(APIView):
@@ -66,21 +66,21 @@ class CurrentSong(APIView):
         if room.exists():
             room = room[0]
         else:
-            return Response({'error':'room not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'room not found'}, status=status.HTTP_404_NOT_FOUND)
         host = room.host
         endpoint = "player/currently-playing"
         response = execute_spotify_api_request(host, endpoint)
-        
+
         if 'error' in response or 'item' not in response:
             return Response({}, status=status.HTTP_204_NO_CONTENT)
-        
+
         item = response.get('item')
         duration = item.get('duration_ms')
         progress = response.get('progress_ms')
         album_cover = item.get('album').get('images')[0].get('url')
         is_playing = response.get('is_playing')
         song_id = item.get('id')
-        
+
         artist_string = ""
 
         for i, artist in enumerate(item.get('artists')):

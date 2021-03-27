@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Grid,
   Card,
   Typography,
   IconButton,
   LinearProgress,
-} from "@material-ui/core";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import PauseIcon from "@material-ui/icons/Pause";
-import SkipNextIcon from "@material-ui/icons/SkipNext";
+} from '@material-ui/core';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
 
 export default class MusicPlayer extends Component {
   constructor(props) {
@@ -16,9 +16,9 @@ export default class MusicPlayer extends Component {
   }
 
   render() {
-    const songProgress = (this.props.time / this / props.duration) * 100;
+    const songProgress = (this.props.time / this.props.duration) * 100;
 
-    retrun(
+    return (
       <Card>
         <Grid container alignItems='center'>
           <Grid item align='center' xs={4}>
