@@ -81,9 +81,14 @@ def execute_spotify_api_request(session_key, endpoint, post_=False, put_=False):
     except:
         return {'error': 'Issue with request'}
 
-def play_song(session_id):
-    return execute_spotify_api_request(session_id, "player/play", put_=True)
 
-def pause_song(session_id):
-    return execute_spotify_api_request(session_id, "player/pause", put_=True)    
-    
+def play_song(session_key):
+    return execute_spotify_api_request(session_key, "player/play", put_=True)
+
+
+def pause_song(session_key):
+    return execute_spotify_api_request(session_key, "player/pause", put_=True)
+
+
+def skip_song(session_key):
+    return execute_spotify_api_request(session_key, "player/next", post_=True)

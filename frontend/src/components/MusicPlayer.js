@@ -1,34 +1,42 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Grid,
   Card,
   Typography,
   IconButton,
   LinearProgress,
-} from "@material-ui/core";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import PauseIcon from "@material-ui/icons/Pause";
-import SkipNextIcon from "@material-ui/icons/SkipNext";
+} from '@material-ui/core';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
 
 export default class MusicPlayer extends Component {
   constructor(props) {
     super(props);
   }
 
-  pauseSong() {
-    const requestOptions = {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-    };
-    fetch("/spotify/pause", requestOptions);
-  }
-
   playSong() {
     const requestOptions = {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
     };
-    fetch("/spotify/play", requestOptions);
+    fetch('/spotify/play', requestOptions);
+  }
+
+  pauseSong() {
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+    };
+    fetch('/spotify/pause', requestOptions);
+  }
+
+  skipSong() {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    };
+    fetch('/spotify/skip', requestOptions);
   }
 
   render() {
@@ -55,7 +63,8 @@ export default class MusicPlayer extends Component {
               >
                 {this.props.is_playing ? <PauseIcon /> : <PlayArrowIcon />}
               </IconButton>
-              <IconButton>
+              <IconButton onClick={() => this.skipSong()}>
+                {this.props.votes} / {this.props.votes_required}
                 <SkipNextIcon />
               </IconButton>
             </div>
